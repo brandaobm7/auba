@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Destaque;
+use App\Models\Home;
 use App\Models\Noticia;
 use App\Models\Page;
 use Illuminate\Http\Request;
@@ -13,13 +13,8 @@ class SiteController extends Controller
 {
     public function index()
     {
-        $destaques = Destaque::where('exibir', 'Sim')->get();
-        $noticias = Noticia::where('exibir', 'Sim')
-                                ->orderBy('created_at', 'desc')
-                                ->paginate(3);
-        $pagesToShow = Page::where('exibir', 'Sim')->get();
-        $allPages = Page::all();
-        return view('home', compact('destaques', 'noticias', 'pagesToShow', 'allPages'));
+        $homes = Home::where('exibir', 'Sim')->get();
+        return view('home', compact('homes'));
     }
 
     public function busca(Request $request, $year = null, $month = null, $slug = null)
@@ -56,20 +51,6 @@ class SiteController extends Controller
         $pagesToShow = Page::where('exibir', 'Sim')->get();
         $allPages = Page::all();
         return view('busca', compact('noticias', 'keyword', 'year', 'month', 'pagesToShow', 'allPages'));
-    }
-
-    public function cimento()
-    {
-        $pagesToShow = Page::where('exibir', 'Sim')->get();
-        $allPages = Page::all();
-        return view('cimento', compact('pagesToShow', 'allPages'));
-    }
-
-    public function contato()
-    {
-        $pagesToShow = Page::where('exibir', 'Sim')->get();
-        $allPages = Page::all();
-        return view('contato', compact('pagesToShow', 'allPages'));
     }
 
     public function noticias()

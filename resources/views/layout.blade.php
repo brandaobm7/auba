@@ -32,61 +32,11 @@
 
 <body id="top">
 
-	<!-- Header -->
-	<header>
-
-		<nav class="navbar navbar-expand-lg shadow-sm" aria-label="Offcanvas navbar large">
-			<div class="container">
-				<a class="navbar-brand" href="{{ route('/') }}">
-					<img src="{{ asset("storage/{$config->imagem}") }}" alt="Logo {{ $config->titulo }}" class="img-fluid" style="max-height:50px">
-				</a>
-			  <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarmain" aria-controls="navbarmain" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			  </button>
-			  <div class="offcanvas offcanvas-end" tabindex="-1" id="navbarmain" aria-labelledby="navbarmainLabel">
-				<div class="offcanvas-header">
-				  <h5 class="offcanvas-title" id="navbarmainLabel">
-					<a class="navbar-brand" href="{{ route('/') }}">
-						<img src="{{ asset("storage/{$config->imagem}") }}" alt="Logo {{ $config->titulo }}" class="img-fluid" style="max-height:40px">
-					</a>
-				  </h5>
-				  <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-				</div>
-				<div class="offcanvas-body">
-				  <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-					<li class="nav-item">
-						<a class="nav-link" href="{{ route('/') }}"> Home</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ route('pages.details', ['slug' => 'quem-somos']) }}">A Empresa</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ route('cimento.home') }}">Cimento</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ route('noticias.home') }}"> Blog</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ route('contato.home') }}">Atendimento</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="">Compre na Barreto</a>
-					</li>
-				  </ul>
-				  <div class="d-flex mt-3 mt-lg-0">
-					<a class="btn-m btn-main round-full" href="{{ $config->whatsapp }}" target="_blank">Fale Conosco</a>
-				  </div>
-				</div>
-			  </div>
-			</div>
-		  </nav>
-	</header>
-	<!-- ./end Header -->
                                 
     <!--=============================== CONTEUDO ===============================-->
     @yield('conteudo')
     <!--=============================== END CONTEUDO ===============================-->        
-
+	
     <!-- footer Start -->
 	<footer class="footer">
 		<div class="container">

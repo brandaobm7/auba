@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Destaque;
-use App\Models\Noticia;
+use App\Models\Home;
+use App\Models\Seguro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -12,9 +12,9 @@ class PainelController extends Controller
 {
 
     public function index(){
-        $destaques = Destaque::all();
-        $noticias = Noticia::orderBy('created_at', 'desc')->paginate(5);
-        return view('admin.painel', compact('noticias', 'destaques'));
+        $homes = Home::all();
+        $seguros = Seguro::orderBy('created_at', 'desc')->paginate(5);
+        return view('admin.painel', compact('seguros', 'homes'));
     }
 
     public function upload(Request $request)

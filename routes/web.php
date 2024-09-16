@@ -6,10 +6,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PainelController;
 use App\Http\Controllers\ConfigController;
-use App\Http\Controllers\DestaqueController;
-use App\Http\Controllers\GaleriaController;
-use App\Http\Controllers\NoticiaController;
-use App\Http\Controllers\PageController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SeguroController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\TimelineController;
 
@@ -17,12 +15,9 @@ Route::get('/set-cookie', [HttpOnlyCookieController::class, 'setCookie']);
 //============== FRONT DO SITE ==============//
 Route::get('/', [SiteController::class, 'index'])->name('/');
 Route::get('/busca', [SiteController::class, 'busca'])->name('busca');
-Route::get('/contato', [SiteController::class, 'contato'])->name('contato.home');
-Route::get('/cimento', [SiteController::class, 'cimento'])->name('cimento.home');
 
 // NOTICIAS
 Route::get('/blog', [SiteController::class, 'noticias'])->name('noticias.home');
-Route::get('/blog/{year}/{month}/{slug}', [SiteController::class, 'detailsNoticias'])->name('noticias.details');
 
 // PÁGINAS
 Route::get('/{slug}', [SiteController::class, 'detailsPages'])->name('pages.details');
@@ -60,33 +55,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/config/edit/{id}', [ConfigController::class, 'edit'])->name('admin.config.edit');
     Route::put('/admin/config/{id}', [ConfigController::class, 'update'])->name('admin.config.update');
     
-    // DESTAQUES
-    Route::get('/admin/destaques', [DestaqueController::class, 'index'])->name('admin.destaques.home');
-    Route::get('/admin/destaques/data', [DestaqueController::class, 'getDestaques'])->name('admin.destaques.data');
-    Route::delete('/admin/destaques/delete/{id}', [DestaqueController::class, 'destroy'])->name('admin.destaques.delete');
-    Route::post('/admin/destaques/store', [DestaqueController::class, 'store'])->name('admin.destaques.store');
-    Route::get('/admin/destaques/edit/{id}', [DestaqueController::class, 'edit'])->name('admin.destaques.edit');
-    Route::put('/admin/destaques/{id}', [DestaqueController::class, 'update'])->name('admin.destaques.update');
+    // HOME
+    Route::get('/admin/homes', [HomeController::class, 'index'])->name('admin.homes.home');
+    Route::get('/admin/homes/data', [HomeController::class, 'getHomes'])->name('admin.homes.data');
+    Route::delete('/admin/homes/delete/{id}', [HomeController::class, 'destroy'])->name('admin.homes.delete');
+    Route::post('/admin/homes/store', [HomeController::class, 'store'])->name('admin.homes.store');
+    Route::get('/admin/homes/edit/{id}', [HomeController::class, 'edit'])->name('admin.homes.edit');
+    Route::put('/admin/homes/{id}', [HomeController::class, 'update'])->name('admin.homes.update');
 
-    // GALERIAS
-    Route::get('/admin/noticias/{noticia}/galerias', [GaleriaController::class, 'index'])->name('admin.galerias.home');
-    Route::delete('/galerias/{galeria}', [GaleriaController::class, 'destroyNoticia'])->name('admin.galerias.delete');
-    Route::get('/admin/noticias/{noticia}/galerias/create', [GaleriaController::class, 'createNoticia'])->name('admin.galerias.create');
-    Route::post('/admin/noticias/{noticia}/galerias/store', [GaleriaController::class, 'storeNoticia'])->name('admin.galerias.store');
-
-    // NOTÍCIAS
-    Route::get('/admin/noticias', [NoticiaController::class, 'index'])->name('admin.noticias.home');
-    Route::get('/admin/noticias/data', [NoticiaController::class, 'getNoticias'])->name('admin.noticias.data');
-    Route::delete('/admin/noticias/delete/{id}', [NoticiaController::class, 'destroy'])->name('admin.noticias.delete');
-    Route::post('/admin/noticias/store', [NoticiaController::class, 'store'])->name('admin.noticias.store');
-    Route::get('/admin/noticias/edit/{id}', [NoticiaController::class, 'edit'])->name('admin.noticias.edit');
-    Route::put('/admin/noticias/{id}', [NoticiaController::class, 'update'])->name('admin.noticias.update');
-
-    // PÁGINAS
-    Route::get('/admin/pages', [PageController::class, 'index'])->name('admin.pages.home');
-    Route::get('/admin/pages/data', [PageController::class, 'getPages'])->name('admin.pages.data');
-    Route::delete('/admin/pages/delete/{id}', [PageController::class, 'destroy'])->name('admin.pages.delete');
-    Route::post('/admin/pages/store', [PageController::class, 'store'])->name('admin.pages.store');
-    Route::get('/admin/pages/edit/{id}', [PageController::class, 'edit'])->name('admin.pages.edit');
-    Route::put('/admin/pages/{id}', [PageController::class, 'update'])->name('admin.pages.update');
+    // SEGUROS
+    Route::get('/admin/seguros', [SeguroController::class, 'index'])->name('admin.seguros.home');
+    Route::get('/admin/seguros/data', [SeguroController::class, 'getSeguros'])->name('admin.seguros.data');
+    Route::delete('/admin/seguros/delete/{id}', [SeguroController::class, 'destroy'])->name('admin.seguros.delete');
+    Route::post('/admin/seguros/store', [SeguroController::class, 'store'])->name('admin.seguros.store');
+    Route::get('/admin/seguros/edit/{id}', [SeguroController::class, 'edit'])->name('admin.seguros.edit');
+    Route::put('/admin/seguros/{id}', [SeguroController::class, 'update'])->name('admin.seguros.update');
 });

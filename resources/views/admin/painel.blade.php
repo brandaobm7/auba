@@ -196,11 +196,11 @@
     </div>
 
     <div class="row">
-        <!-- destaques -->
+        <!-- Home -->
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-3">Destaques</h4>
+                    <h4 class="header-title mb-3">Home</h4>
 
                     <div class="table-responsive">
                         <table class="table table-borderless table-hover table-centered m-0">
@@ -213,26 +213,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($destaques as $destaque) 
+                                @foreach ($homes as $home) 
                                 @php
-                                    $date = $destaque->created_at;
+                                    $date = $home->created_at;
                                     $formattedDate = Carbon::parse($date)->translatedFormat('d \d\e F \d\e Y');
                                 @endphp     
                                 <tr>
                                     <td style="width: 36px;">
-                                        <img src="{{ url("storage/{$destaque->imagem}") }}" alt="contact-img" title="contact-img" class="rounded-circle avatar-sm" />
+                                        <img src="{{ url("storage/{$home->imagem}") }}" alt="contact-img" title="contact-img" class="rounded-circle avatar-sm" />
                                     </td>
 
                                     <td>
-                                        <h5 class="m-0 fw-normal">{{ $destaque->titulo }}</h5>
+                                        <h5 class="m-0 fw-normal">{{ $home->titulo }}</h5>
                                     </td>
 
                                     <td class="text-center">
-                                        {{ formatDate($destaque->created_at) }}
+                                        {{ formatDate($home->created_at) }}
                                     </td>
 
                                     <td class="text-center">
-                                        <a href="{{ route('admin.destaques.edit', $destaque->id) }}" class="btn btn-primary btn-sm me-1">Editar</a>
+                                        <a href="{{ route('admin.homes.edit', $home->id) }}" class="btn btn-primary btn-sm me-1">Editar</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -242,13 +242,13 @@
                 </div>
             </div>
         </div>
-        <!-- end destaques -->
+        <!-- end Home -->
 
-        <!-- noticias -->
+        <!-- Seguros -->
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-3">Notícias</h4>
+                    <h4 class="header-title mb-3">Seguros</h4>
 
                     <div class="table-responsive">
                         <table class="table table-borderless table-hover table-centered m-0">
@@ -261,28 +261,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($noticias as $noticia)     
+                                @foreach ($seguros as $seguro) 
                                 @php
-                                    $date = $noticia->created_at;
-                                    $formattedDate = Carbon::parse($date)->translatedFormat('j \\de F \\de Y');
-                                    $year = $date->year;
-                                    $month = $date->format('m'); // Usa dois dígitos para o mês
-                                @endphp   
+                                    $date = $seguro->created_at;
+                                    $formattedDate = Carbon::parse($date)->translatedFormat('d \d\e F \d\e Y');
+                                @endphp     
                                 <tr>
                                     <td style="width: 36px;">
-                                        <img src="{{ url("storage/{$noticia->imagem}") }}" alt="contact-img" title="contact-img" class="rounded-circle avatar-sm" />
+                                        <img src="{{ url("storage/{$seguro->imagem}") }}" alt="contact-img" title="contact-img" class="rounded-circle avatar-sm" />
                                     </td>
 
                                     <td>
-                                        <h5 class="m-0 fw-normal"><a href="{{ route('noticias.details', ['year' => $year, 'month' => $month, 'slug' => $noticia->slug]) }}">{{ $noticia->titulo }}</a></h5>
+                                        <h5 class="m-0 fw-normal">{{ $seguro->titulo }}</h5>
                                     </td>
 
                                     <td class="text-center">
-                                        {{ formatDate($noticia->created_at) }}
+                                        {{ formatDate($seguro->created_at) }}
                                     </td>
 
                                     <td class="text-center">
-                                        <a href="{{ route('admin.noticias.edit', $noticia->id) }}" class="btn btn-primary btn-sm me-1">Editar</a>
+                                        <a href="{{ route('admin.seguros.edit', $seguro->id) }}" class="btn btn-primary btn-sm me-1">Editar</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -292,7 +290,7 @@
                 </div>
             </div>
         </div>
-        <!-- end noticias -->
+        <!-- end Seguros -->
     </div>
     <!--============================ end TABELA DE CONTEUDO ============================-->
 

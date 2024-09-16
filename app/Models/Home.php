@@ -14,6 +14,7 @@ class Home extends Model implements Auditable
 
     protected $fillable = [
         'titulo',
+        'descricao',
         'exibir',
         'imagem',
         'video',

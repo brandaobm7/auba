@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Destaques')
+@section('title', 'Home')
 
 @section('conteudo')
   <!-- Start Content-->
@@ -12,7 +12,7 @@
                 <div class="page-title-right">
                     <a href="#" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#ModalCadastrar"> <i class="fas fa-plus me-1"></i> Cadastrar</a>
                 </div>
-                <h4 class="page-title">Destaques</h4>
+                <h4 class="page-title">Home</h4>
             </div>
         </div>
     </div>
@@ -23,25 +23,20 @@
       <div class="modal-dialog modal-full-width">
           <div class="modal-content">
               <div class="modal-header">
-                  <h4 class="modal-title" id="ModalCadastrarLabel">Cadastrar Destaque</h4>
+                  <h4 class="modal-title" id="ModalCadastrarLabel">Cadastrar Home</h4>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form action="{{ route('admin.destaques.store') }}" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('admin.homes.store') }}" method="POST" enctype="multipart/form-data">
                @csrf
               <div class="modal-body row">
                 
                   <input type="hidden" name="id_user" value="{{ auth()->user()->id }}">
-                  <div class="mb-3 col-lg-12">
+                  <div class="mb-3 col-lg-10">
                       <label for="titulo" class="form-label">Título</label>
                       <input class="form-control" type="text" id="titulo" name="titulo" placeholder="Título">
                   </div>
 
-                  <div class="mb-3 col-lg-12">
-                      <label for="link" class="form-label">Link</label>
-                      <input class="form-control" type="text" id="link" name="link" placeholder="Link">
-                  </div>
-
-                  <div class="mb-3 col-lg-6">
+                  <div class="mb-3 col-lg-2">
                       <label for="exibir" class="form-label">Exibir</label>
                       <select id="exibir" name="exibir" class="selectize-drop-header" placeholder="Exibir no site">
                           <option value="Sim">Sim</option>
@@ -50,8 +45,38 @@
                   </div>
 
                   <div class="mb-3 col-lg-6">
-                      <label for="imagem" class="form-label">Escolha o arquivo</label>
+                      <label for="imagem" class="form-label">Imagem</label>
                       <input class="form-control" type="file" id="imagem" name="imagem">
+                  </div>
+
+                  <div class="mb-3 col-lg-6">
+                      <label for="video" class="form-label">Vídeo</label>
+                      <input class="form-control" type="text" id="video" name="video" placeholder="Vídeo">
+                  </div>
+
+                  <div class="mb-3 col-lg-6">
+                      <label for="link" class="form-label">Título do Botão</label>
+                      <input class="form-control" type="text" id="titulo_link" name="titulo_link" placeholder="Título do Botão">
+                  </div>
+
+                  <div class="mb-3 col-lg-6">
+                      <label for="link" class="form-label">Link</label>
+                      <input class="form-control" type="text" id="link" name="link" placeholder="Link">
+                  </div>
+
+                  <div class="mb-3 col-lg-6">
+                      <label for="bg_imagem" class="form-label">Imagem de Fundo</label>
+                      <input class="form-control" type="file" id="bg_imagem" name="bg_imagem">
+                  </div>
+
+                  <div class="mb-3 col-lg-6">
+                      <label for="bg_cor" class="form-label">Cor de Fundo</label>
+                      <input class="form-control" id="bg_cor" type="color" name="bg_cor" value="#111">
+                  </div>
+
+                  <div class="mb-3 col-lg-12">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="3"></textarea>
                   </div>
   
               </div>
@@ -101,7 +126,7 @@
       $('#data-table').DataTable({
           processing: true,
           serverSide: true,
-          ajax: '/admin/destaques/data',
+          ajax: '/admin/homes/data',
           columns: [
               { data: 'imagem', name: 'imagem' },
               { data: 'titulo', name: 'titulo' },

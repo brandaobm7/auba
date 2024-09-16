@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('seguros', function (Blueprint $table) {
             $table->id();
             $table->string('titulo')->nullable();
+            $table->text('descricao')->nullable();
             $table->string('exibir');
             $table->string('imagem')->nullable();
             $table->string('video')->nullable();

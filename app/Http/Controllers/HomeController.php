@@ -79,30 +79,40 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600', 
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600',
+            'bg_imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600',
         ], [
             'imagem.image' => 'O arquivo deve ser uma imagem.',
             'imagem.mimes' => 'A imagem deve ser um arquivo do tipo: jpg, jpeg, png, gif.',
-            'imagem.max' => 'A imagem não pode ser maior que 2 MB.',
+            'imagem.max' => 'A imagem não pode ser maior que 25 MB.',
+            'bg_imagem.image' => 'O arquivo deve ser uma imagem.',
+            'bg_imagem.mimes' => 'A imagem deve ser um arquivo do tipo: jpg, jpeg, png, gif.',
+            'bg_imagem.max' => 'A imagem de fundo não pode ser maior que 25 MB.',
         ]);
 
         $home = $request->all();
-    
+
+        // Upload da primeira imagem (imagem)
         if($request->hasFile('imagem')) {
             $imagemOriginal = $request->file('imagem');
             $extensao = $imagemOriginal->getClientOriginalExtension();
-            
-            // Gerar um nome para a imagem a partir do título da notícia
             $nomeImagem = Str::slug($request->titulo) . '-' . time() . '.' . $extensao;
-
-            // Armazenar a imagem no diretório "upload" com o novo nome
-            $path = $request->imagem->storeAs('upload', $nomeImagem);
-    
-            // Armazenar o caminho da imagem no banco de dados
-            $home['imagem'] = $path;
+            $pathImagem = $request->imagem->storeAs('upload', $nomeImagem);
+            $home['imagem'] = $pathImagem;
         }
-    
+
+        // Upload da segunda imagem (bg_imagem)
+        if($request->hasFile('bg_imagem')) {
+            $bgImagemOriginal = $request->file('bg_imagem');
+            $extensaoBg = $bgImagemOriginal->getClientOriginalExtension();
+            $nomeBgImagem = Str::slug($request->titulo) . '-bg-' . time() . '.' . $extensaoBg;
+            $pathBgImagem = $request->bg_imagem->storeAs('upload', $nomeBgImagem);
+            $home['bg_imagem'] = $pathBgImagem;
+        }
+
+        // Criar o registro no banco de dados
         $home = Home::create($home);
+
         return redirect()->route('admin.homes.home')->with('success', 'Post cadastrado com sucesso!');
     }
 

@@ -74,26 +74,20 @@
                         <li class="menu-item">
                             <a href="{{ route('admin.painel') }}" class="menu-link">
                                 <span class="menu-icon"><i class="icon-home"></i></span>
-                                <span class="menu-text"> Home </span>
+                                <span class="menu-text"> Dashboard </span>
                             </a>
                         </li>
 
                         <li class="menu-item">
-                            <a href="{{ route('admin.destaques.home') }}" class="menu-link">
+                            <a href="{{ route('admin.homes.home') }}" class="menu-link">
                                 <span class="menu-icon"><i class="icon-folder-alt"></i></span>
-                                <span class="menu-text"> Destaques </span>
+                                <span class="menu-text"> Home </span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="{{ route('admin.noticias.home') }}" class="menu-link">
+                            <a href="{{ route('admin.seguros.home') }}" class="menu-link">
                                 <span class="menu-icon"><i class="icon-folder-alt"></i></span>
-                                <span class="menu-text"> Notícias </span>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="{{ route('admin.pages.home') }}" class="menu-link">
-                                <span class="menu-icon"><i class="icon-folder-alt"></i></span>
-                                <span class="menu-text"> Páginas </span>
+                                <span class="menu-text"> Seguros </span>
                             </a>
                         </li>
 

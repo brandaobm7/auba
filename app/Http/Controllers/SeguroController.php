@@ -17,7 +17,7 @@ class SeguroController extends Controller
     public function index()
     {
         $seguros = Seguro::all();
-        return view('admin.seguros.seguro', compact('seguros'));
+        return view('admin.seguros.home', compact('seguros'));
     }
 
     public function getSeguros()
@@ -79,31 +79,41 @@ class SeguroController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600', 
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600',
+            'bg_imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600',
         ], [
             'imagem.image' => 'O arquivo deve ser uma imagem.',
             'imagem.mimes' => 'A imagem deve ser um arquivo do tipo: jpg, jpeg, png, gif.',
-            'imagem.max' => 'A imagem não pode ser maior que 2 MB.',
+            'imagem.max' => 'A imagem não pode ser maior que 25 MB.',
+            'bg_imagem.image' => 'O arquivo deve ser uma imagem.',
+            'bg_imagem.mimes' => 'A imagem deve ser um arquivo do tipo: jpg, jpeg, png, gif.',
+            'bg_imagem.max' => 'A imagem de fundo não pode ser maior que 25 MB.',
         ]);
 
         $seguro = $request->all();
-    
+
+        // Upload da primeira imagem (imagem)
         if($request->hasFile('imagem')) {
             $imagemOriginal = $request->file('imagem');
             $extensao = $imagemOriginal->getClientOriginalExtension();
-            
-            // Gerar um nome para a imagem a partir do título da notícia
             $nomeImagem = Str::slug($request->titulo) . '-' . time() . '.' . $extensao;
-
-            // Armazenar a imagem no diretório "upload" com o novo nome
-            $path = $request->imagem->storeAs('upload', $nomeImagem);
-    
-            // Armazenar o caminho da imagem no banco de dados
-            $seguro['imagem'] = $path;
+            $pathImagem = $request->imagem->storeAs('upload', $nomeImagem);
+            $seguro['imagem'] = $pathImagem;
         }
-    
+
+        // Upload da segunda imagem (bg_imagem)
+        if($request->hasFile('bg_imagem')) {
+            $bgImagemOriginal = $request->file('bg_imagem');
+            $extensaoBg = $bgImagemOriginal->getClientOriginalExtension();
+            $nomeBgImagem = Str::slug($request->titulo) . '-bg-' . time() . '.' . $extensaoBg;
+            $pathBgImagem = $request->bg_imagem->storeAs('upload', $nomeBgImagem);
+            $seguro['bg_imagem'] = $pathBgImagem;
+        }
+
+        // Criar o registro no banco de dados
         $seguro = Seguro::create($seguro);
-        return redirect()->route('admin.seguros.seguro')->with('success', 'Post cadastrado com sucesso!');
+
+        return redirect()->route('admin.se$seguros.home')->with('success', 'Post cadastrado com sucesso!');
     }
 
     /**
@@ -135,38 +145,61 @@ class SeguroController extends Controller
         }
 
         $request->validate([
-            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600', 
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600',
+            'bg_imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600',
         ], [
             'imagem.image' => 'O arquivo deve ser uma imagem.',
             'imagem.mimes' => 'A imagem deve ser um arquivo do tipo: jpg, jpeg, png, gif.',
-            'imagem.max' => 'A imagem não pode ser maior que 2 MB.',
+            'imagem.max' => 'A imagem não pode ser maior que 25 MB.',
+            'bg_imagem.image' => 'O arquivo deve ser uma imagem.',
+            'bg_imagem.mimes' => 'A imagem deve ser um arquivo do tipo: jpg, jpeg, png, gif.',
+            'bg_imagem.max' => 'A imagem de fundo não pode ser maior que 25 MB.',
         ]);
 
-        // Atualizar os dados da notícia, exceto a imagem
-        $seguro->update($request->except('imagem'));
+        // Excluir imagem principal, se solicitado
+        if ($request->has('delete_imagem') && $seguro->imagem) {
+            Storage::delete($seguro->imagem);
+            $seguro->imagem = null;
+        }
 
-        // Verificar se há uma nova imagem e fazer o upload
-        if($request->hasFile('imagem')){
-            // Deletar a imagem antiga, se existir
-            if($seguro->imagem){
+        // Excluir imagem de fundo, se solicitado
+        if ($request->has('delete_bg_imagem') && $seguro->bg_imagem) {
+            Storage::delete($seguro->bg_imagem);
+            $seguro->bg_imagem = null;
+        }
+
+        // Atualizar os dados da notícia, exceto as imagens
+        $seguro->update($request->except(['imagem', 'bg_imagem']));
+
+        // Upload da nova imagem, se enviada
+        if ($request->hasFile('imagem')) {
+            if ($seguro->imagem) {
                 Storage::delete($seguro->imagem);
             }
 
             $imagemOriginal = $request->file('imagem');
             $extensao = $imagemOriginal->getClientOriginalExtension();
-            
-            // Gerar um nome para a imagem a partir do título da notícia
             $nomeImagem = Str::slug($request->titulo) . '-' . time() . '.' . $extensao;
-
-            // Armazenar a imagem no diretório "upload" com o novo nome
             $path = $request->imagem->storeAs('upload', $nomeImagem);
-
-            // Atualizar o campo 'imagem' com o novo caminho
             $seguro->imagem = $path;
-            $seguro->save();
         }
 
-        return redirect()->route('admin.seguros.seguro')->with('success', 'Post editado com sucesso!');
+        // Upload da nova imagem de fundo, se enviada
+        if ($request->hasFile('bg_imagem')) {
+            if ($seguro->bg_imagem) {
+                Storage::delete($seguro->bg_imagem);
+            }
+
+            $bgImagemOriginal = $request->file('bg_imagem');
+            $extensao = $bgImagemOriginal->getClientOriginalExtension();
+            $nomeBgImagem = Str::slug($request->titulo) . '-fundo-' . time() . '.' . $extensao;
+            $path = $request->bg_imagem->storeAs('upload', $nomeBgImagem);
+            $seguro->bg_imagem = $path;
+        }
+
+        $seguro->save();
+
+        return redirect()->route('admin.seguros.home')->with('success', 'Post atualizada com sucesso.');
     }
 
     /**
@@ -183,12 +216,16 @@ class SeguroController extends Controller
                 Storage::delete($seguro->imagem);
             }
 
+            if ($home->bg_imagem) {
+                Storage::delete($home->bg_imagem);
+            }
+
             // Excluir a notícia do banco de dados
             $seguro->delete();
-            return redirect()->route('admin.seguros.seguro')->with('success', 'Post excluído com sucesso!');
+            return redirect()->route('admin.seguros.home')->with('success', 'Post excluído com sucesso!');
         } else {
             // Se a notícia não for encontrada, redirecionar de volta com uma mensagem de erro
-            return redirect()->route('admin.seguros.seguro')->with('error', 'Erro ao excluir post. Post não encontrado.');
+            return redirect()->route('admin.seguros.home')->with('error', 'Erro ao excluir post. Post não encontrado.');
         }
     }
 }

@@ -24,7 +24,7 @@
 
 @section('conteudo')
 
-<div class="col-lg-12 text-center mb-5">
+<div class="text-center pt-20 pb-20 bg-dark">
 	<a class="navbar-brand" href="{{ route('/') }}">
 		<img src="{{ url("storage/{$config->imagem}") }}" alt="Logo {{ $config->titulo }}" class="img-fluid" style="max-height:50px">
 	</a>

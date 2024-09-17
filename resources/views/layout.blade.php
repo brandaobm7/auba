@@ -117,7 +117,7 @@
             <!-- Conteúdo da barra no Cookies -->
             <p style="margin: 0px; font-size: 13px;">Utilizamos cookies e outras tecnologias semelhantes para melhorar sua experiência em nossa plataforma. Ao utilizar nossos serviços, 
             você concorda com nossos <a href="{{ route('pages.details', ['slug' => 'politica-de-privacidade']) }}" class="text-dark">Termos de Uso e Politica de Privacidade.</a></p> 
-            <button type="button" class="btn btn-main-2 round-full d-block m-20" id="btnAceitar">Aceito</button>
+            <button type="button" class="btn btn-main round-full d-block m-20" id="btnAceitar">Aceito</button>
             </div>
         </div>
         </div>

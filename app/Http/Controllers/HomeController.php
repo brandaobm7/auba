@@ -145,38 +145,61 @@ class HomeController extends Controller
         }
 
         $request->validate([
-            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600', 
+            'imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600',
+            'bg_imagem' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:25600',
         ], [
             'imagem.image' => 'O arquivo deve ser uma imagem.',
             'imagem.mimes' => 'A imagem deve ser um arquivo do tipo: jpg, jpeg, png, gif.',
-            'imagem.max' => 'A imagem não pode ser maior que 2 MB.',
+            'imagem.max' => 'A imagem não pode ser maior que 25 MB.',
+            'bg_imagem.image' => 'O arquivo deve ser uma imagem.',
+            'bg_imagem.mimes' => 'A imagem deve ser um arquivo do tipo: jpg, jpeg, png, gif.',
+            'bg_imagem.max' => 'A imagem de fundo não pode ser maior que 25 MB.',
         ]);
 
-        // Atualizar os dados da notícia, exceto a imagem
-        $home->update($request->except('imagem'));
+        // Excluir imagem principal, se solicitado
+        if ($request->has('delete_imagem') && $home->imagem) {
+            Storage::delete($home->imagem);
+            $home->imagem = null;
+        }
 
-        // Verificar se há uma nova imagem e fazer o upload
-        if($request->hasFile('imagem')){
-            // Deletar a imagem antiga, se existir
-            if($home->imagem){
+        // Excluir imagem de fundo, se solicitado
+        if ($request->has('delete_bg_imagem') && $home->bg_imagem) {
+            Storage::delete($home->bg_imagem);
+            $home->bg_imagem = null;
+        }
+
+        // Atualizar os dados da notícia, exceto as imagens
+        $home->update($request->except(['imagem', 'bg_imagem']));
+
+        // Upload da nova imagem, se enviada
+        if ($request->hasFile('imagem')) {
+            if ($home->imagem) {
                 Storage::delete($home->imagem);
             }
 
             $imagemOriginal = $request->file('imagem');
             $extensao = $imagemOriginal->getClientOriginalExtension();
-            
-            // Gerar um nome para a imagem a partir do título da notícia
             $nomeImagem = Str::slug($request->titulo) . '-' . time() . '.' . $extensao;
-
-            // Armazenar a imagem no diretório "upload" com o novo nome
             $path = $request->imagem->storeAs('upload', $nomeImagem);
-
-            // Atualizar o campo 'imagem' com o novo caminho
             $home->imagem = $path;
-            $home->save();
         }
 
-        return redirect()->route('admin.homes.home')->with('success', 'Post editado com sucesso!');
+        // Upload da nova imagem de fundo, se enviada
+        if ($request->hasFile('bg_imagem')) {
+            if ($home->bg_imagem) {
+                Storage::delete($home->bg_imagem);
+            }
+
+            $bgImagemOriginal = $request->file('bg_imagem');
+            $extensao = $bgImagemOriginal->getClientOriginalExtension();
+            $nomeBgImagem = Str::slug($request->titulo) . '-fundo-' . time() . '.' . $extensao;
+            $path = $request->bg_imagem->storeAs('upload', $nomeBgImagem);
+            $home->bg_imagem = $path;
+        }
+
+        $home->save();
+
+        return redirect()->route('admin.homes.home')->with('success', 'Post atualizada com sucesso.');
     }
 
     /**
@@ -191,6 +214,10 @@ class HomeController extends Controller
             // Excluir a imagem associada, se existir
             if ($home->imagem) {
                 Storage::delete($home->imagem);
+            }
+
+            if ($home->bg_imagem) {
+                Storage::delete($home->bg_imagem);
             }
 
             // Excluir a notícia do banco de dados

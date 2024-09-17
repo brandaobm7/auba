@@ -88,7 +88,12 @@
                             </div>
                             <div class="col-lg-3">
                                 @if($home->imagem)
-                                    <p class="mb-1">Imagem Lateral</p>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" id="delete_imagem" name="delete_imagem">
+                                    <label class="form-check-label" for="delete_imagem">
+                                        Excluir esta imagem
+                                    </label>
+                                </div>
                                     <img src="{{ url("storage/{$home->imagem}") }}" class="img-fluid img-thumbnail" />
                                 @else
                                     <p class="mb-1">Imagem Lateral</p>
@@ -97,9 +102,14 @@
                                         Não há imagem disponível.
                                     </div>
                                 @endif
-
+                                    <hr>
                                 @if($home->bg_imagem)
-                                    <p class="mb-1">Imagem de Fundo</p>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" id="delete_bg_imagem" name="delete_bg_imagem">
+                                    <label class="form-check-label" for="delete_bg_imagem">
+                                        Excluir esta imagem de fundo
+                                    </label>
+                                </div>
                                     <img src="{{ url("storage/{$home->bg_imagem}") }}" class="img-fluid img-thumbnail" />
                                 @else
                                     <p class="mb-1">Imagem de Fundo</p>

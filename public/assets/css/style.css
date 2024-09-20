@@ -4,6 +4,9 @@
   --main-primary-color: #f8a102;
   --main-secondary-color: #271900;
   --main-for-color: #c58000;
+  --main-blue-color: #3074FC;
+  --main-green-color: #06a76e;
+  --main-yellow-color: #f0c91c;
   --main-white-color: #fff;
   --main-dark-color: #252525;
   --main-hover-color: #1a1a1a;
@@ -102,6 +105,7 @@ p {
 	border: 2px solid transparent;
 	transition: all .35s ease;
 	text-align: center;
+	box-shadow: 0px 0px 20px 0px rgb(17 17 17 / 20%);
   }
 
 .btn-m.btn-icon i {
@@ -121,9 +125,10 @@ p {
 }
 
 .btn-main:hover {
-  background: var(--main-hover-color);
-  border-color: var(--main-hover-color);
-  color: var(--main-white-color);
+  background: var(--main-white-color);
+  border-color: var(--main-white-color);
+  color: var(--main-hover-color);
+  box-shadow: 10px 10px #111;
 }
 
 .btn-main-2 {
@@ -133,9 +138,10 @@ p {
 }
 
 .btn-main-2:hover {
-  background: var(--main-hover-color);
-  color: var(--main-white-color);
-  border-color: var(--main-hover-color);
+	background: var(--main-white-color);
+	color: var(--main-hover-color);
+	border-color: var(--main-white-color);
+	box-shadow: 10px 10px #111;
 }
 
 .btn-transparent {
@@ -145,22 +151,76 @@ p {
 }
 
 .btn-transparent:hover {
-  background: var(--main-hover-color);
-  color: var(--main-white-color);
-  border-color: var(--main-hover-color);
+  background: var(--main-white-color);
+  color: var(--main-hover-color);
+  border-color: var(--main-white-color);
+  box-shadow: 10px 10px #111;
 }
 
 .btn-white {
   background: var(--main-white-color);
   border-color: var(--main-white-color);
-  color: var(--main-primary-color);
+  color: var(--main-dark-color);
 }
 
 .btn-white:hover {
-  background: var(--main-hover-color);
-  color: var(--main-white-color);
-  border-color: var(--main-hover-color);
+	background: var(--main-white-color);
+	color: var(--main-hover-color);
+	border-color: var(--main-white-color);
+	box-shadow: 10px 10px #111;
 }  
+
+.btn-blue {
+	background: var(--main-blue-color);
+	border-color: var(--main-blue-color);
+	color: var(--main-white-color);
+}
+
+.btn-blue:hover {
+	background: var(--main-white-color);
+	color: var(--main-hover-color);
+	border-color: var(--main-white-color);
+	box-shadow: 10px 10px #111;
+} 
+
+.btn-green {
+	background: var(--main-green-color);
+	border-color: var(--main-green-color);
+	color: var(--main-white-color);
+}
+
+.btn-green:hover {
+	background: var(--main-white-color);
+	color: var(--main-hover-color);
+	border-color: var(--main-white-color);
+	box-shadow: 10px 10px #111;
+} 
+
+.btn-yellow {
+	background: var(--main-yellow-color);
+	border-color: var(--main-yellow-color);
+	color: var(--main-dark-color);
+}
+
+.btn-yellow:hover {
+	background: var(--main-white-color);
+	color: var(--main-hover-color);
+	border-color: var(--main-white-color);
+	box-shadow: 10px 10px #111;
+} 
+
+.btn-pages{
+	background-color: #222222;
+    border-radius: 7px;
+    color: #fff;
+    display: inline-block;
+    margin: 5px;
+    padding: 30px 50px;
+	box-shadow: 0px 0px 7px rgb(0 0 0 / 40%);
+}
+.btn-pages:hover{	
+	box-shadow: 10px 10px #111;
+}
 
 /* ============================================================== 
     # BORDAS
@@ -231,6 +291,27 @@ p {
 .section-sm {
   padding: 50px 0;
 }
+
+.section-main{
+	padding:80px 0px;
+}
+
+@media (max-width: 991px) {
+	.section-main{
+		padding:50px 0px;
+	}
+}
+
+.col-img{
+	padding-top:0px
+}
+
+@media (max-width: 991px) {
+	.col-img{
+		padding-top:30px
+	}
+}
+
 
 /* ============================================================== 
     # TEXT
@@ -333,6 +414,11 @@ a:focus {
     transition: all .25s ease;
 }
 
+.navbar-nav{
+	
+    align-items: center;
+}
+
 .dropdown-toggle::after {
   display: none;
 }
@@ -383,11 +469,11 @@ a:focus {
     # FOOTER
 =================================================================== */
 .footer{
-	background: var(--main-dark-color);
+	background: var(--main-hover-color);
 	padding-top: 50px;
 }
 .footer i{
-    font-size: 45px;
+    font-size: 25px;
     margin: 0 10px;
 	color: var(--main-white-color);
 }
@@ -404,6 +490,12 @@ a:focus {
 .footer-copy-text{
 	font-size: 13px;
 	color: var(--main-white-color);
+}
+
+@media (max-width: 991px) {
+	.footer i{
+		font-size: 18px;
+	}
 }
 
 /* ============================================================== 
@@ -448,10 +540,97 @@ a:focus {
 
 
 /* ============================================================== 
-    # ATENDIMENTO
+    # SAUDE
 =================================================================== */
 
+.col-saude {
+    background-color: transparent;
+    background-image: linear-gradient(115deg, #0F4070 0%, #0F3051 100%);
+    box-shadow: 0px 0px 81px 0px rgba(0, 0, 0, 0.22);
+    margin: 0px 12px 0px 12px;
+    --e-column-margin-right: 12px;
+    --e-column-margin-left: 12px;
+    padding: 25px 25px 25px 25px;
+    border-radius: 7px;
+	margin-top: 30px;
+	height: 100%;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.col-saude h3 {
+	color: #30aafc;
+	margin-bottom: 10px;
+}
+.col-saude p{
+	color: var(--main-white-color);
+}
 
+/* ============================================================== 
+    # PLANOS
+=================================================================== */
+
+.col-plan {
+    background-color: transparent;
+    background-image: linear-gradient(115deg, #0F4070 0%, #0F3051 100%);
+    box-shadow: 0px 0px 81px 0px rgba(0, 0, 0, 0.22);
+    margin: 0px 12px 0px 12px;
+    --e-column-margin-right: 12px;
+    --e-column-margin-left: 12px;
+    padding: 25px 25px 25px 25px;
+    border-radius: 7px;
+	margin-top: 30px;
+	height: 100%;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.col-plan h2 {
+	color: #30aafc;
+	margin-bottom: 10px;
+}
+
+.col-plan h3 {
+	color: var(--main-white-color);
+	margin-bottom: 10px;
+}
+.col-plan ul{
+	list-style: inside;
+	padding: 0px;
+}
+.col-plan li{
+	margin-bottom: 10px;
+	color: var(--main-white-color);
+}	
+
+/* ============================================================== 
+    # SEGURO
+=================================================================== */
+.col-seguro {
+	background-color: transparent;
+	background-image: linear-gradient(217deg, #fc6c04 0%, #C92D27 100%);
+    box-shadow: 0px 0px 81px 0px rgba(0, 0, 0, 0.22);
+    margin: 0px 12px 0px 12px;
+    --e-column-margin-right: 12px;
+    --e-column-margin-left: 12px;
+    padding: 25px 25px 25px 25px;
+    border-radius: 7px;
+	margin-top: 30px;
+	height: 100%;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.col-seguro h3 {
+	color: var(--main-white-color);
+	margin-bottom: 10px;
+}
+.col-seguro p{
+	color: var(--main-white-color);
+}
 
 /* ============================================================== 
     # ATENDIMENTO

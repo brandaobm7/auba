@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Home;
-use App\Models\Noticia;
-use App\Models\Page;
+use App\Models\Banco;
+use App\Models\Consorcio;
+use App\Models\Saude;
+use App\Models\Seguro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -17,71 +19,28 @@ class SiteController extends Controller
         return view('home', compact('homes'));
     }
 
-    public function busca(Request $request, $year = null, $month = null, $slug = null)
+    public function bancos()
     {
-        $keyword = $request->input('keyword');
-
-        // Buscar notícias
-        $noticiasQuery = Noticia::where(function($query) use ($keyword) {
-                                    $query->where('titulo', 'like', "%{$keyword}%")
-                                        ->orWhere('descricao', 'like', "%{$keyword}%");
-                                });
-
-        if ($year) {
-            $noticiasQuery->whereYear('created_at', $year);
-        }
-
-        if ($month) {
-            $noticiasQuery->whereMonth('created_at', $month);
-        }
-
-        if ($slug) {
-            $noticiasQuery->where('slug', $slug);
-        }
-
-        $noticias = $noticiasQuery->get();
-
-        // Buscar Equipes
-        // $equipes = Equipe::where(function($query) use ($keyword) {
-        //     $query->where('titulo', 'like', "%{$keyword}%")
-        //         ->orWhere('descricao', 'like', "%{$keyword}%");
-        //     })
-        //     ->get();
-
-        $pagesToShow = Page::where('exibir', 'Sim')->get();
-        $allPages = Page::all();
-        return view('busca', compact('noticias', 'keyword', 'year', 'month', 'pagesToShow', 'allPages'));
+        $bancos = Banco::where('exibir', 'Sim')->get();
+        return view('bancos', compact('bancos'));
     }
 
-    public function noticias()
+    public function consorcios()
     {
-        $pagesToShow = Page::where('exibir', 'Sim')->get();
-        $allPages = Page::all();
-        $noticias = Noticia::where('exibir', 'Sim')
-                                ->orderBy('created_at', 'desc')
-                                ->paginate(10);
-        return view('noticias.home', compact('noticias', 'pagesToShow', 'allPages',));
+        $consorcios = Consorcio::where('exibir', 'Sim')->get();
+        return view('consorcios', compact('consorcios'));
     }
 
-    public function detailsNoticias($year, $month, $slug)
+    public function saudes()
     {
-        $pagesToShow = Page::where('exibir', 'Sim')->get();
-        $allPages = Page::all();
-        $noticia = Noticia::where('exibir', 'Sim')
-                            ->whereYear('created_at', $year)
-                            ->whereMonth('created_at', $month)
-                            ->where('slug', $slug)
-                            ->firstOrFail();
-        return view('noticias.details', compact('noticia', 'pagesToShow', 'allPages',));
+        $saudes = Saude::where('exibir', 'Sim')->get();
+        return view('saudes', compact('saudes'));
     }
 
-    public function detailsPages($slug)
+    public function seguros()
     {
-        $pagesToShow = Page::where('exibir', 'Sim')->get();
-        $allPages = Page::all();
-        $page = Page::where('slug', $slug)
-                            ->firstOrFail();
-        return view('pages.details', compact('page', 'pagesToShow', 'allPages',));
+        $seguros = Seguro::where('exibir', 'Sim')->get();
+        return view('seguros', compact('seguros'));
     }
 
 }

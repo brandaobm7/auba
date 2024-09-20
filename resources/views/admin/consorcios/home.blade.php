@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Home')
+@section('title', 'Consórcio')
 
 @section('conteudo')
   <!-- Start Content-->
@@ -12,7 +12,7 @@
                 <div class="page-title-right">
                     <a href="#" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#ModalCadastrar"> <i class="fas fa-plus me-1"></i> Cadastrar</a>
                 </div>
-                <h4 class="page-title">Home</h4>
+                <h4 class="page-title">Consórcio</h4>
             </div>
         </div>
     </div>
@@ -23,10 +23,10 @@
       <div class="modal-dialog modal-full-width">
           <div class="modal-content">
               <div class="modal-header">
-                  <h4 class="modal-title" id="ModalCadastrarLabel">Cadastrar Home</h4>
+                  <h4 class="modal-title" id="ModalCadastrarLabel">Cadastrar Consórcio</h4>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form action="{{ route('admin.homes.store') }}" method="POST" enctype="multipart/form-data">
+              <form action="{{ route('admin.consorcios.store') }}" method="POST" enctype="multipart/form-data">
                @csrf
               <div class="modal-body row">
                 
@@ -144,7 +144,7 @@
       $('#data-table').DataTable({
           processing: true,
           serverSide: true,
-          ajax: '/admin/homes/data',
+          ajax: '/admin/consorcios/data',
           columns: [
               { data: 'imagem', name: 'imagem' },
               { data: 'titulo', name: 'titulo' },

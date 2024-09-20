@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Home extends Model implements Auditable
+class Banco extends Model implements Auditable
 {
     use HasFactory;
 

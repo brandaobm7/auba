@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Seguro;
+use App\Models\Saude;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
 
-class SeguroController extends Controller
+class SaudeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $seguros = Seguro::all();
-        return view('admin.seguros.home', compact('seguros'));
+        $saudes = Saude::all();
+        return view('admin.saudes.home', compact('saudes'));
     }
 
-    public function getSeguros()
+    public function getSaudes()
     {
-        $seguros = Seguro::select(['id', 'imagem', 'titulo', 'created_at', 'updated_at'])->orderBy('created_at', 'desc');
+        $saudes = Saude::select(['id', 'imagem', 'titulo', 'created_at', 'updated_at'])->orderBy('created_at', 'desc');
 
-        return DataTables::of($seguros)
+        return DataTables::of($saudes)
             ->addColumn('action', function($query) { 
-                return $botoes ="<div style='display: flex; justify-content: center;'><a href='". route('admin.seguros.edit', $query->id) ."' class='btn btn-primary btn-sm me-1'>Editar</a>
+                return $botoes ="<div style='display: flex; justify-content: center;'><a href='". route('admin.saudes.edit', $query->id) ."' class='btn btn-primary btn-sm me-1'>Editar</a>
                 <a href='delete-$query->id' class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#delete-$query->id'><i class='dripicons-trash'></i></a></div>
                 <!-- Danger Alert Modal -->
                 <div id='delete-$query->id' class='modal fade' tabindex='-1' role='dialog' aria-hidden='true'>
@@ -37,7 +37,7 @@ class SeguroController extends Controller
                                 <i class='dripicons-wrong h1 text-white'></i>
                                 <h4 class='mt-2 text-white'>ATENÇÃO</h4>
                                 <p class='mt-3 text-white'>Tem certeza que deseja excluir: <br> <strong>$query->titulo</strong></p>
-                                <form action='".route('admin.seguros.delete', $query->id)."' method='POST'>
+                                <form action='".route('admin.saudes.delete', $query->id)."' method='POST'>
                                 ". method_field('DELETE') ."
                                 ". csrf_field() ."
                                     <button type='submit' class='btn btn-light my-2'>Excluir</button>
@@ -90,7 +90,7 @@ class SeguroController extends Controller
             'bg_imagem.max' => 'A imagem de fundo não pode ser maior que 25 MB.',
         ]);
 
-        $seguro = $request->all();
+        $saude = $request->all();
 
         // Upload da primeira imagem (imagem)
         if($request->hasFile('imagem')) {
@@ -98,7 +98,7 @@ class SeguroController extends Controller
             $extensao = $imagemOriginal->getClientOriginalExtension();
             $nomeImagem = Str::slug($request->titulo) . '-' . time() . '.' . $extensao;
             $pathImagem = $request->imagem->storeAs('upload', $nomeImagem);
-            $seguro['imagem'] = $pathImagem;
+            $saude['imagem'] = $pathImagem;
         }
 
         // Upload da segunda imagem (bg_imagem)
@@ -107,19 +107,19 @@ class SeguroController extends Controller
             $extensaoBg = $bgImagemOriginal->getClientOriginalExtension();
             $nomeBgImagem = Str::slug($request->titulo) . '-bg-' . time() . '.' . $extensaoBg;
             $pathBgImagem = $request->bg_imagem->storeAs('upload', $nomeBgImagem);
-            $seguro['bg_imagem'] = $pathBgImagem;
+            $saude['bg_imagem'] = $pathBgImagem;
         }
 
         // Criar o registro no banco de dados
-        $seguro = Seguro::create($seguro);
+        $saude = Saude::create($saude);
 
-        return redirect()->route('admin.seguros.home')->with('success', 'Post cadastrado com sucesso!');
+        return redirect()->route('admin.saudes.home')->with('success', 'Post cadastrado com sucesso!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Seguro $seguro)
+    public function show(Saude $saude)
     {
         //
     }
@@ -127,20 +127,20 @@ class SeguroController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Seguro $seguro, string|int $id)
+    public function edit(Saude $saude, string|int $id)
     {
-        if (!$seguro = Seguro::find($id)) {
+        if (!$saude = Saude::find($id)) {
             return redirect()->back();
         }
-        return view('admin.seguros.edit', compact('seguro'));
+        return view('admin.saudes.edit', compact('saude'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Seguro $seguro, string $id)
+    public function update(Request $request, Saude $saude, string $id)
     {
-        if (!$seguro = $seguro->find($id)) {
+        if (!$saude = $saude->find($id)) {
             return redirect()->back();
         }
 
@@ -157,49 +157,49 @@ class SeguroController extends Controller
         ]);
 
         // Excluir imagem principal, se solicitado
-        if ($request->has('delete_imagem') && $seguro->imagem) {
-            Storage::delete($seguro->imagem);
-            $seguro->imagem = null;
+        if ($request->has('delete_imagem') && $saude->imagem) {
+            Storage::delete($saude->imagem);
+            $saude->imagem = null;
         }
 
         // Excluir imagem de fundo, se solicitado
-        if ($request->has('delete_bg_imagem') && $seguro->bg_imagem) {
-            Storage::delete($seguro->bg_imagem);
-            $seguro->bg_imagem = null;
+        if ($request->has('delete_bg_imagem') && $saude->bg_imagem) {
+            Storage::delete($saude->bg_imagem);
+            $saude->bg_imagem = null;
         }
 
         // Atualizar os dados da notícia, exceto as imagens
-        $seguro->update($request->except(['imagem', 'bg_imagem']));
+        $saude->update($request->except(['imagem', 'bg_imagem']));
 
         // Upload da nova imagem, se enviada
         if ($request->hasFile('imagem')) {
-            if ($seguro->imagem) {
-                Storage::delete($seguro->imagem);
+            if ($saude->imagem) {
+                Storage::delete($saude->imagem);
             }
 
             $imagemOriginal = $request->file('imagem');
             $extensao = $imagemOriginal->getClientOriginalExtension();
             $nomeImagem = Str::slug($request->titulo) . '-' . time() . '.' . $extensao;
             $path = $request->imagem->storeAs('upload', $nomeImagem);
-            $seguro->imagem = $path;
+            $saude->imagem = $path;
         }
 
         // Upload da nova imagem de fundo, se enviada
         if ($request->hasFile('bg_imagem')) {
-            if ($seguro->bg_imagem) {
-                Storage::delete($seguro->bg_imagem);
+            if ($saude->bg_imagem) {
+                Storage::delete($saude->bg_imagem);
             }
 
             $bgImagemOriginal = $request->file('bg_imagem');
             $extensao = $bgImagemOriginal->getClientOriginalExtension();
             $nomeBgImagem = Str::slug($request->titulo) . '-fundo-' . time() . '.' . $extensao;
             $path = $request->bg_imagem->storeAs('upload', $nomeBgImagem);
-            $seguro->bg_imagem = $path;
+            $saude->bg_imagem = $path;
         }
 
-        $seguro->save();
+        $saude->save();
 
-        return redirect()->route('admin.seguros.home')->with('success', 'Post atualizada com sucesso.');
+        return redirect()->route('admin.saudes.home')->with('success', 'Post atualizada com sucesso.');
     }
 
     /**
@@ -207,13 +207,13 @@ class SeguroController extends Controller
      */
     public function destroy($id)
     {
-        $seguro = Seguro::find($id);
+        $saude = Saude::find($id);
 
         // Verificar se a notícia foi encontrada
-        if ($seguro) {
+        if ($saude) {
             // Excluir a imagem associada, se existir
-            if ($seguro->imagem) {
-                Storage::delete($seguro->imagem);
+            if ($saude->imagem) {
+                Storage::delete($saude->imagem);
             }
 
             if ($home->bg_imagem) {
@@ -221,11 +221,11 @@ class SeguroController extends Controller
             }
 
             // Excluir a notícia do banco de dados
-            $seguro->delete();
-            return redirect()->route('admin.seguros.home')->with('success', 'Post excluído com sucesso!');
+            $saude->delete();
+            return redirect()->route('admin.saudes.home')->with('success', 'Post excluído com sucesso!');
         } else {
             // Se a notícia não for encontrada, redirecionar de volta com uma mensagem de erro
-            return redirect()->route('admin.seguros.home')->with('error', 'Erro ao excluir post. Post não encontrado.');
+            return redirect()->route('admin.saudes.home')->with('error', 'Erro ao excluir post. Post não encontrado.');
         }
     }
 }

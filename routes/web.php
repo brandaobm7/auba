@@ -7,6 +7,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PainelController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BancoController;
+use App\Http\Controllers\ConsorcioController;
+use App\Http\Controllers\SaudeController;
 use App\Http\Controllers\SeguroController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\TimelineController;
@@ -17,7 +20,10 @@ Route::get('/', [SiteController::class, 'index'])->name('/');
 Route::get('/busca', [SiteController::class, 'busca'])->name('busca');
 
 // NOTICIAS
-Route::get('/blog', [SiteController::class, 'noticias'])->name('noticias.home');
+Route::get('/banco', [SiteController::class, 'bancos'])->name('bancos');
+Route::get('/consorcio', [SiteController::class, 'consorcios'])->name('consorcios');
+Route::get('/saude', [SiteController::class, 'saudes'])->name('saudes');
+Route::get('/seguro', [SiteController::class, 'seguros'])->name('seguros');
 
 // PÁGINAS
 Route::get('/{slug}', [SiteController::class, 'detailsPages'])->name('pages.details');
@@ -62,6 +68,30 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/homes/store', [HomeController::class, 'store'])->name('admin.homes.store');
     Route::get('/admin/homes/edit/{id}', [HomeController::class, 'edit'])->name('admin.homes.edit');
     Route::put('/admin/homes/{id}', [HomeController::class, 'update'])->name('admin.homes.update');
+
+    // BANCO
+    Route::get('/admin/bancos', [BancoController::class, 'index'])->name('admin.bancos.home');
+    Route::get('/admin/bancos/data', [BancoController::class, 'getBancos'])->name('admin.bancos.data');
+    Route::delete('/admin/bancos/delete/{id}', [BancoController::class, 'destroy'])->name('admin.bancos.delete');
+    Route::post('/admin/bancos/store', [BancoController::class, 'store'])->name('admin.bancos.store');
+    Route::get('/admin/bancos/edit/{id}', [BancoController::class, 'edit'])->name('admin.bancos.edit');
+    Route::put('/admin/bancos/{id}', [BancoController::class, 'update'])->name('admin.bancos.update');
+
+    // CONSORCIOS
+    Route::get('/admin/consorcios', [ConsorcioController::class, 'index'])->name('admin.consorcios.home');
+    Route::get('/admin/consorcios/data', [ConsorcioController::class, 'getConsorcios'])->name('admin.consorcios.data');
+    Route::delete('/admin/consorcios/delete/{id}', [ConsorcioController::class, 'destroy'])->name('admin.consorcios.delete');
+    Route::post('/admin/consorcios/store', [ConsorcioController::class, 'store'])->name('admin.consorcios.store');
+    Route::get('/admin/consorcios/edit/{id}', [ConsorcioController::class, 'edit'])->name('admin.consorcios.edit');
+    Route::put('/admin/consorcios/{id}', [ConsorcioController::class, 'update'])->name('admin.consorcios.update');
+
+    // SAÚDE
+    Route::get('/admin/saudes', [SaudeController::class, 'index'])->name('admin.saudes.home');
+    Route::get('/admin/saudes/data', [SaudeController::class, 'getSaudes'])->name('admin.saudes.data');
+    Route::delete('/admin/saudes/delete/{id}', [SaudeController::class, 'destroy'])->name('admin.saudes.delete');
+    Route::post('/admin/saudes/store', [SaudeController::class, 'store'])->name('admin.saudes.store');
+    Route::get('/admin/saudes/edit/{id}', [SaudeController::class, 'edit'])->name('admin.saudes.edit');
+    Route::put('/admin/saudes/{id}', [SaudeController::class, 'update'])->name('admin.saudes.update');
 
     // SEGUROS
     Route::get('/admin/seguros', [SeguroController::class, 'index'])->name('admin.seguros.home');

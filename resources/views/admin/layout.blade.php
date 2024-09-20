@@ -85,9 +85,27 @@
                             </a>
                         </li>
                         <li class="menu-item">
+                            <a href="{{ route('admin.bancos.home') }}" class="menu-link">
+                                <span class="menu-icon"><i class="icon-folder-alt"></i></span>
+                                <span class="menu-text"> Banco </span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('admin.consorcios.home') }}" class="menu-link">
+                                <span class="menu-icon"><i class="icon-folder-alt"></i></span>
+                                <span class="menu-text"> Consórcio </span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
                             <a href="{{ route('admin.seguros.home') }}" class="menu-link">
                                 <span class="menu-icon"><i class="icon-folder-alt"></i></span>
-                                <span class="menu-text"> Seguros </span>
+                                <span class="menu-text"> Proteção Veicular </span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('admin.saudes.home') }}" class="menu-link">
+                                <span class="menu-icon"><i class="icon-folder-alt"></i></span>
+                                <span class="menu-text"> Saúde </span>
                             </a>
                         </li>
 

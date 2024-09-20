@@ -220,7 +220,11 @@
                                 @endphp     
                                 <tr>
                                     <td style="width: 36px;">
-                                        <img src="{{ url("storage/{$home->imagem}") }}" alt="contact-img" title="contact-img" class="rounded-circle avatar-sm" />
+                                        @if ($home->imagem)
+                                            <img src="{{ url("storage/{$home->imagem}") }}" alt="imagem post" title="imagem post" class="rounded-circle avatar-sm" />
+                                        @else
+                                            <img src="{{ asset("dash/assets/images/no-pictures.png") }}" alt="no-image" title="no-image" class="rounded-circle avatar-sm" />
+                                        @endif
                                     </td>
 
                                     <td>
@@ -248,7 +252,7 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-3">Seguros</h4>
+                    <h4 class="header-title mb-3">Proteção Veicular</h4>
 
                     <div class="table-responsive">
                         <table class="table table-borderless table-hover table-centered m-0">
@@ -268,7 +272,11 @@
                                 @endphp     
                                 <tr>
                                     <td style="width: 36px;">
-                                        <img src="{{ url("storage/{$seguro->imagem}") }}" alt="contact-img" title="contact-img" class="rounded-circle avatar-sm" />
+                                        @if ($seguro->imagem)
+                                            <img src="{{ url("storage/{$seguro->imagem}") }}" alt="imagem post" title="imagem post" class="rounded-circle avatar-sm" />
+                                        @else
+                                            <img src="{{ asset("dash/assets/images/no-pictures.png") }}" alt="no-image" title="no-image" class="rounded-circle avatar-sm" />
+                                        @endif
                                     </td>
 
                                     <td>

@@ -32,7 +32,54 @@
 
 <body id="top">
 
-                                
+	<!-- Header -->
+	<header>
+
+		<nav class="navbar navbar-expand-lg shadow-sm" aria-label="Offcanvas navbar large">
+			<div class="container">
+				<a class="navbar-brand" href="{{ route('/') }}">
+					<img src="{{ asset("storage/{$config->imagem}") }}" alt="Logo {{ $config->titulo }}" class="img-fluid" style="max-height:50px">
+				</a>
+			  <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarmain" aria-controls="navbarmain" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="offcanvas offcanvas-end" tabindex="-1" id="navbarmain" aria-labelledby="navbarmainLabel">
+				<div class="offcanvas-header">
+				  <h5 class="offcanvas-title" id="navbarmainLabel">
+					<a class="navbar-brand" href="{{ route('/') }}">
+						<img src="{{ asset("storage/{$config->imagem}") }}" alt="Logo {{ $config->titulo }}" class="img-fluid" style="max-height:40px">
+					</a>
+				  </h5>
+				  <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+				</div>
+				<div class="offcanvas-body">
+				  <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('/') }}"> Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('bancos') }}">Bank</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('consorcios') }}">Consórcios</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('saudes') }}">Saúde</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('seguros') }}">Proteção</a>
+					</li>
+				  </ul>
+				  <div class="d-flex mt-3 mt-lg-0">
+					<a class="btn-m btn-main round-full pt-10 pb-10 " href="{{ $config->whatsapp }}" target="_blank">Fale Conosco</a>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </nav>
+	</header>
+	<!-- ./end Header -->
+
     <!--=============================== CONTEUDO ===============================-->
     @yield('conteudo')
     <!--=============================== END CONTEUDO ===============================-->        
@@ -41,17 +88,12 @@
 	<footer class="footer">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12 text-center">
-					<div class="mb-5">
-						<img src="{{ url("assets/images/logo-footer.png") }}" alt="Logo {{ $config->titulo }}" class="img-fluid" style="max-height:70px">
+
+				<div class="col-lg-12 text-center d-flex justify-content-between">
+					<div class="mb-3">
+						<img src="{{ url("storage/{$config->imagem}") }}" alt="Logo {{ $config->titulo }}" class="img-fluid" style="max-height:50px">
 					</div>
-					<div class="md-5 text-center text-white">
-						<p>{{ $config->endereco }} </p>
-						<h1 class="text-white mb-3">{{ $config->phone }}</h1>
-						<p>{{ $config->atendimento }}</p>
-						<p>{{ $config->email }}</p>
-					</div>
-					<div class="mt-5 mb-5">
+					<div class="mb-3 d-flex align-items-center">
 						@if ($config->whatsapp)
 							<a href="{{ $config->whatsapp }}" target="_blank"><i class='fab fa-whatsapp'></i></a>
 						@endif
@@ -85,6 +127,17 @@
 						@endif
 					</div>
 				</div>
+
+				<div class="col-lg-12 text-center">
+					<hr>
+					<div class="text-center text-white mt-3">
+						<p>{{ $config->endereco }} </p>
+						<h1 class="text-white mb-3">{{ $config->phone }}</h1>
+						<p>{{ $config->atendimento }}</p>
+						<p>{{ $config->email }}</p>
+					</div>
+				</div>
+
 			</div>
 		</div>		
 		<div class="footer-copy">

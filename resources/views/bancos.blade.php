@@ -1,6 +1,6 @@
 
 @extends('layout')
-@section('title', 'Planos de Saúde')
+@section('title', 'Banco')
 
 @push('metas')
     <meta itemprop="image" content="{{ asset('assets/images/img-social.jpg') }}">
@@ -25,49 +25,49 @@
 @section('conteudo')
 
 
-@foreach ($homes as $home)
-    <section style="background:{{ $home->bg_cor }}">
-        <div class="section-main" style="background: url('{{ url("storage/{$home->bg_imagem}") }}') top center no-repeat">
+@foreach ($bancos as $banco)
+    <section style="background:{{ $banco->bg_cor }}">
+        <div class="section-main" style="background: url('{{ url("storage/{$banco->bg_imagem}") }}') top center no-repeat">
             <div class="container">
                 <div class="row d-flex align-items-center justify-content-center">
                     @if($loop->iteration % 2 == 0)
 
                         <!-- Imagem/Vídeo à esquerda e Texto à direita -->
-						@if ($home->imagem || $home->video) 
+						@if ($banco->imagem || $banco->video) 
                         <div class="col-lg-6 col-img text-center">
-                            @if ($home->imagem) 
-                                <img src="{{ url("storage/{$home->imagem}") }}" class="img-fluid" />
+                            @if ($banco->imagem) 
+                                <img src="{{ url("storage/{$banco->imagem}") }}" class="img-fluid" />
                             @endif
 
-                            @if ($home->video) 
+                            @if ($banco->video) 
                                 <div class="ratio ratio-4x3">
-                                    <iframe src="https://www.youtube.com/embed/{{ $home->video }}?rel=0" allowfullscreen style="border-radius: 20px;
+                                    <iframe src="https://www.youtube.com/embed/{{ $banco->video }}?rel=0" allowfullscreen style="border-radius: 20px;
     box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 60%);"></iframe>
                                 </div>
                             @endif
                         </div>
                         <div class="col-lg-6">
-                            <h2 style="color:{{ $home->cor_titulo }}">
-                                {{ $home->titulo }}
+                            <h2 style="color:{{ $banco->cor_titulo }}">
+                                {{ $banco->titulo }}
                             </h2>
-                            {!! $home->descricao !!}
+                            {!! $banco->descricao !!}
 							
-							@if ($home->link) 
+							@if ($banco->link) 
                                 <div class="pt-30">
-                                    <a href="{{ $home->link }}" class="btn-m {{ $home->cor_link }} mt-3">{{ $home->titulo_link }}</a>
+                                    <a href="{{ $banco->link }}" class="btn-m {{ $banco->cor_link }} mt-3">{{ $banco->titulo_link }}</a>
                                 </div> 
                             @endif
                         </div>
 						@else
 						<div class="col-lg-12 text-center">
-                            <h2 style="color:{{ $home->cor_titulo }}">
-                                {{ $home->titulo }}
+                            <h2 style="color:{{ $banco->cor_titulo }}">
+                                {{ $banco->titulo }}
                             </h2>
-                            {!! $home->descricao !!}
+                            {!! $banco->descricao !!}
 							
-							@if ($home->link) 
+							@if ($banco->link) 
                                 <div class="pt-30">
-                                    <a href="{{ $home->link }}" class="btn-m {{ $home->cor_link }} mt-3">{{ $home->titulo_link }}</a>
+                                    <a href="{{ $banco->link }}" class="btn-m {{ $banco->cor_link }} mt-3">{{ $banco->titulo_link }}</a>
                                 </div> 
                             @endif
                         </div>
@@ -76,39 +76,39 @@
                     @else
 
                         <!-- Texto à esquerda e Imagem/Vídeo à direita -->
-						@if ($home->imagem || $home->video) 
+						@if ($banco->imagem || $banco->video) 
                         <div class="col-lg-6">
-                            <h2 style="color:{{ $home->cor_titulo }}">
-                                {{ $home->titulo }}
+                            <h2 style="color:{{ $banco->cor_titulo }}">
+                                {{ $banco->titulo }}
                             </h2>
-                            {!! $home->descricao !!}
+                            {!! $banco->descricao !!}
 
-							@if ($home->link) 
-                            	<a href="{{ $home->link }}" class="btn-m {{ $home->cor_link }} mt-3">{{ $home->titulo_link }}</a>
+							@if ($banco->link) 
+                            	<a href="{{ $banco->link }}" class="btn-m {{ $banco->cor_link }} mt-3">{{ $banco->titulo_link }}</a>
                             @endif
                         </div>
                         <div class="col-lg-6 col-img text-center">
-                            @if ($home->imagem) 
-                                <img src="{{ url("storage/{$home->imagem}") }}" class="img-fluid" />
+                            @if ($banco->imagem) 
+                                <img src="{{ url("storage/{$banco->imagem}") }}" class="img-fluid" />
                             @endif
 
-                            @if ($home->video) 
+                            @if ($banco->video) 
                                 <div class="ratio ratio-4x3">
-                                    <iframe src="https://www.youtube.com/embed/{{ $home->video }}?rel=0" allowfullscreen style="border-radius: 20px;
+                                    <iframe src="https://www.youtube.com/embed/{{ $banco->video }}?rel=0" allowfullscreen style="border-radius: 20px;
     box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 60%);"></iframe>
                                 </div>
                             @endif
                         </div>
 						@else
 						<div class="col-lg-12 text-center">
-                            <h2 style="color:{{ $home->cor_titulo }}">
-                                {{ $home->titulo }}
+                            <h2 style="color:{{ $banco->cor_titulo }}">
+                                {{ $banco->titulo }}
                             </h2>
-                            {!! $home->descricao !!}
+                            {!! $banco->descricao !!}
 							
-							@if ($home->link)
+							@if ($banco->link)
                             <div class="pt-30">
-                            	<a href="{{ $home->link }}" class="btn-m {{ $home->cor_link }} mt-3">{{ $home->titulo_link }}</a>
+                            	<a href="{{ $banco->link }}" class="btn-m {{ $banco->cor_link }} mt-3">{{ $banco->titulo_link }}</a>
                             </div> 
                             @endif
                         </div>

@@ -14,10 +14,13 @@ class Seguro extends Model implements Auditable
 
     protected $fillable = [
         'titulo',
+        'cor_titulo',
+        'descricao',
         'exibir',
         'imagem',
         'video',
         'titulo_link',
+        'cor_link',
         'link',
         'bg_cor',
         'bg_imagem',
